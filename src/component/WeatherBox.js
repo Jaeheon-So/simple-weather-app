@@ -1,15 +1,17 @@
 import React from "react";
 
-const WeatherBox = ({ weather }) => {
+const WeatherBox = ({ weatherInfo }) => {
   return (
     <div className="weather-box">
-      <div className="city">{weather?.name}</div>
+      <div className="city">{weatherInfo?.name}</div>
       <div className="temp">
-        {weather?.main.temp} °C / {(weather?.main.temp * 1.8 + 32).toFixed(2)}{" "}
-        °F
+        {weatherInfo?.main.temp} °C /{" "}
+        {(weatherInfo?.main.temp * 1.8 + 32).toFixed(2)} °F
       </div>
       <div className="weather-status">
-        {(weather?.weather[0].description).toUpperCase()}
+        {weatherInfo?.weather[0]?.description.replace(/\b[a-z]/g, (char) =>
+          char.toUpperCase()
+        )}
       </div>
     </div>
   );
