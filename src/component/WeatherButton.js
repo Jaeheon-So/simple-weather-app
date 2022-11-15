@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
 const WeatherButton = ({ cities, setCity }) => {
-  const [btnActive, setBtnActive] = useState("");
+  const [btnActive, setBtnActive] = useState("Current Location");
 
   const handleCity = (city, idx) => {
     setBtnActive(cities[idx]);
