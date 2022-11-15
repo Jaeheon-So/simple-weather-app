@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import WeatherBox from "./component/WeatherBox";
@@ -12,10 +12,31 @@ import WeatherButton from "./component/WeatherButton";
 // 6. 데이터를 가져오는 동안 로딩 스피너가 돈다.
 
 function App() {
+  const [weather, setWeather] = useState(null);
+  const getWeatherByCurrentLocation = async (lat, lon) => {
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=306661f7f056ef621f2fb068cbe76406&units=metric`;
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data);
+    setWeather(data);
+  };
+
+  const getCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      getWeatherByCurrentLocation(latitude, longitude);
+    });
+  };
+
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
+
   return (
     <>
       <div className="container">
-        <WeatherBox />
+        <WeatherBox weather={weather} />
         <WeatherButton />
       </div>
     </>
